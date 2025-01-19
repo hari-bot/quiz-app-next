@@ -36,8 +36,6 @@ git clone https://github.com/hari-bot/quiz-app-next.git
 cd quiz-app-next
 ```
 
-````
-
 ### Install Dependencies
 
 ```bash
@@ -110,4 +108,7 @@ Contributions are welcome! Feel free to fork the repository and submit a pull re
 ## ✨ Author
 
 [Hari Bot](https://github.com/hari-bot)
-````
+
+```
+
+```
