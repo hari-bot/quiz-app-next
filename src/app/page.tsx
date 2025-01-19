@@ -25,6 +25,7 @@ const fetchQuestions = async (): Promise<Question[]> => {
 };
 
 function QuizApp() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [email, setEmail] = useState("");
   const [quizStarted, setQuizStarted] = useState(false);
   const [quizEnded, setQuizEnded] = useState(false);
