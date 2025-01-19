@@ -1,8 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Here is the `README.md` file for your project:
 
-## Getting Started
+````markdown
+# Quiz App
 
-First, run the development server:
+A dynamic and interactive quiz application built using Next.js and React Query, designed to provide an engaging user experience for answering trivia questions. The app fetches questions from the [Open Trivia Database](https://opentdb.com/) and includes features like timed quizzes, progress tracking, and detailed reports.
+
+## 🚀 Live Demo
+
+[Quiz App Live](https://quiz-app-casualfunnel.netlify.app/)
+
+## 📂 Repository
+
+[GitHub Repository](https://github.com/hari-bot/quiz-app-next)
+
+## 📸 Screenshot
+
+![Screenshot of the Quiz App](public/screenshot.png)
+
+---
+
+## 🛠️ Features
+
+- **Dynamic Question Fetching**: Questions are fetched from an external API for fresh content every session.
+- **Timer**: A countdown timer ensures the quiz is completed within 30 minutes.
+- **Progress Tracking**: Users can navigate through questions and track their progress.
+- **Detailed Report**: At the end of the quiz, users get a detailed report of their performance, including correct answers and explanations.
+
+---
+
+## 📦 Installation and Setup
+
+Follow these steps to run the project locally:
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/hari-bot/quiz-app-next.git
+cd quiz-app-next
+```
+````
+
+### Install Dependencies
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+### Start the Development Server
 
 ```bash
 npm run dev
@@ -10,27 +58,61 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the app in action.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🤔 Assumptions
 
-## Learn More
+1. Users are expected to have a stable internet connection to fetch quiz questions from the API.
+2. The app assumes all questions fetched from the API are valid and properly formatted.
+3. Quiz session is completed in one sitting
+4. Users will provide a valid email address
+5. 30 minutes is sufficient time for 15 questions
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚧 Challenges Faced
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### API Rate Limits
 
-## Deploy on Vercel
+- **Challenge**: The Open Trivia Database API has a rate limit, which could affect frequent use during testing.
+- **Solution**: Implemented caching using React Query's stale time to minimize API calls.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Timer Management
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Challenge**: Ensuring the timer works across different questions without disrupting the quiz flow.
+- **Solution**: Used `setInterval` with proper cleanup to manage the timer effectively.
+
+### Navigation and Progress Tracking
+
+- **Challenge**: Users needed an intuitive way to navigate questions while tracking attempted and unattempted ones.
+- **Solution**: Built a `QuestionNavigation` component that visually represents progress.
+
+**Question Consistency**
+
+- **Challenge**: Questions in the report page didn't match the questions from the quiz
+- **Solution**: Implemented proper caching strategy using React Query's `staleTime` and moved questions fetching to the parent component
+
+**Navigation State**
+
+- **Challenge**: Maintaining accurate state for visited and answered questions
+- **Solution**: Created a robust state management system using arrays to track question status
+
+---
+
+## 🙌 Contributions
+
+Contributions are welcome! Feel free to fork the repository and submit a pull request.
+
+---
+
+## ✨ Author
+
+[Hari Bot](https://github.com/hari-bot)
+
+```
+
+```
