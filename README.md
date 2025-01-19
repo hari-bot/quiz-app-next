@@ -1,6 +1,3 @@
-Here is the `README.md` file for your project:
-
-````markdown
 # Quiz App
 
 A dynamic and interactive quiz application built using Next.js and React Query, designed to provide an engaging user experience for answering trivia questions. The app fetches questions from the [Open Trivia Database](https://opentdb.com/) and includes features like timed quizzes, progress tracking, and detailed reports.
@@ -38,6 +35,7 @@ Follow these steps to run the project locally:
 git clone https://github.com/hari-bot/quiz-app-next.git
 cd quiz-app-next
 ```
+
 ````
 
 ### Install Dependencies
@@ -112,7 +110,4 @@ Contributions are welcome! Feel free to fork the repository and submit a pull re
 ## ✨ Author
 
 [Hari Bot](https://github.com/hari-bot)
-
-```
-
-```
+````
