@@ -1,7 +1,7 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
+import parse from "html-react-parser";
 
 interface Question {
   question: string;
@@ -10,44 +10,14 @@ interface Question {
 }
 
 interface ReportPageProps {
+  questions: Question[];
   userAnswers: string[];
 }
 
-const fetchQuestions = async (): Promise<Question[]> => {
-  const response = await fetch("https://opentdb.com/api.php?amount=15");
-  const data = await response.json();
-  return data.results;
-};
-
-export default function ReportPage({ userAnswers }: ReportPageProps) {
-  const {
-    data: questions,
-    isLoading,
-    isError,
-  } = useQuery<Question[]>({
-    queryKey: ["questions"],
-    queryFn: fetchQuestions,
-    staleTime: 1000 * 60 * 60,
-  });
-
-  if (isLoading) {
-    return <div className="text-center">Loading report...</div>;
-  }
-
-  if (isError) {
-    return (
-      <div className="text-center text-red-500">
-        Error loading report. Please try again.
-      </div>
-    );
-  }
-
-  if (!questions || questions.length === 0) {
-    return (
-      <div className="text-center">No questions available for the report.</div>
-    );
-  }
-
+export default function ReportPage({
+  questions,
+  userAnswers,
+}: ReportPageProps) {
   const totalCorrect = questions.reduce((sum, question, index) => {
     return sum + (userAnswers[index] === question.correct_answer ? 1 : 0);
   }, 0);
@@ -87,7 +57,7 @@ export default function ReportPage({ userAnswers }: ReportPageProps) {
                       : "text-red-600"
                   }`}
                 >
-                  {userAnswers[index] || "Not answered"}
+                  {parse(userAnswers[index]) || "Not answered"}
                 </p>
               </div>
               <div className="bg-gray-100 p-4 rounded-lg transition-all duration-200 hover:shadow-md">
@@ -95,7 +65,7 @@ export default function ReportPage({ userAnswers }: ReportPageProps) {
                   Correct Answer:
                 </h3>
                 <p className="text-lg text-green-600">
-                  {question.correct_answer}
+                  {parse(question.correct_answer)}
                 </p>
               </div>
             </div>

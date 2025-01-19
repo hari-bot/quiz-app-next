@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import QuestionNavigation from "./QuestionNavigation";
@@ -13,30 +12,19 @@ interface Question {
 }
 
 interface QuizPageProps {
+  questions: Question[];
   onEnd: (answers: string[]) => void;
 }
 
-const fetchQuestions = async (): Promise<Question[]> => {
-  const response = await fetch("https://opentdb.com/api.php?amount=15");
-  const data = await response.json();
-  return data.results;
-};
-
-export default function QuizPage({ onEnd }: QuizPageProps) {
+export default function QuizPage({ questions, onEnd }: QuizPageProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [userAnswers, setUserAnswers] = useState<string[]>(Array(15).fill(""));
+  const [userAnswers, setUserAnswers] = useState<string[]>(
+    Array(questions.length).fill("")
+  );
   const [timeLeft, setTimeLeft] = useState(30 * 60); // 30 minutes in seconds
-  const [visited, setVisited] = useState<boolean[]>(Array(15).fill(false));
-
-  const {
-    data: questions,
-    isLoading,
-    isError,
-  } = useQuery<Question[]>({
-    queryKey: ["questions"],
-    queryFn: fetchQuestions,
-    staleTime: 1000 * 60 * 60,
-  });
+  const [visited, setVisited] = useState<boolean[]>(
+    Array(questions.length).fill(false)
+  );
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -57,9 +45,6 @@ export default function QuizPage({ onEnd }: QuizPageProps) {
     const newAnswers = [...userAnswers];
     newAnswers[currentQuestion] = answer;
     setUserAnswers(newAnswers);
-    const newAttempted = [...visited];
-    newAttempted[currentQuestion] = true;
-    setVisited(newAttempted);
   };
 
   const navigateToQuestion = (index: number) => {
@@ -72,22 +57,6 @@ export default function QuizPage({ onEnd }: QuizPageProps) {
   const submitQuiz = () => {
     onEnd(userAnswers);
   };
-
-  if (isLoading) {
-    return <div className="text-center">Loading questions...</div>;
-  }
-
-  if (isError) {
-    return (
-      <div className="text-center text-red-500">
-        Error loading questions. Please try again.
-      </div>
-    );
-  }
-
-  if (!questions || questions.length === 0) {
-    return <div className="text-center">No questions available.</div>;
-  }
 
   const currentQuestionData = questions[currentQuestion];
   const allChoices = [
