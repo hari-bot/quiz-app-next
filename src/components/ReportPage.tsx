@@ -57,7 +57,9 @@ export default function ReportPage({
                       : "text-red-600"
                   }`}
                 >
-                  {parse(userAnswers[index]) || "Not answered"}
+                  {userAnswers[index]
+                    ? parse(userAnswers[index])
+                    : "Not answered"}
                 </p>
               </div>
               <div className="bg-gray-100 p-4 rounded-lg transition-all duration-200 hover:shadow-md">
