@@ -20,10 +20,10 @@ export default function StartPage({ onStart }: StartPageProps) {
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <h1 className="text-3xl font-bold mb-6 text-center">
+      <h1 className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
         Welcome to the Quiz
       </h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6 animate-fadeIn">
         <Input
           type="email"
           placeholder="Enter your email"
@@ -32,7 +32,10 @@ export default function StartPage({ onStart }: StartPageProps) {
           required
           className="w-full"
         />
-        <Button type="submit" className="w-full py-3 text-lg">
+        <Button
+          type="submit"
+          className="w-full py-3 text-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
+        >
           Start Quiz
         </Button>
       </form>

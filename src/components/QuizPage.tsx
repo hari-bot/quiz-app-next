@@ -35,6 +35,7 @@ export default function QuizPage({ onEnd }: QuizPageProps) {
   } = useQuery<Question[]>({
     queryKey: ["questions"],
     queryFn: fetchQuestions,
+    staleTime: 1000 * 60 * 60,
   });
 
   useEffect(() => {
@@ -56,6 +57,9 @@ export default function QuizPage({ onEnd }: QuizPageProps) {
     const newAnswers = [...userAnswers];
     newAnswers[currentQuestion] = answer;
     setUserAnswers(newAnswers);
+    const newAttempted = [...visited];
+    newAttempted[currentQuestion] = true;
+    setVisited(newAttempted);
   };
 
   const navigateToQuestion = (index: number) => {
@@ -93,11 +97,21 @@ export default function QuizPage({ onEnd }: QuizPageProps) {
 
   return (
     <div className="w-full">
-      <div className="mb-4 text-center text-xl font-bold">
-        Time left: {Math.floor(timeLeft / 60)}:
-        {(timeLeft % 60).toString().padStart(2, "0")}
+      <div className="mb-6 text-center">
+        <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+          Time left: {Math.floor(timeLeft / 60)}:
+          {(timeLeft % 60).toString().padStart(2, "0")}
+        </span>
       </div>
-      <Card>
+      <div className="mb-4 bg-gray-200 rounded-full h-2.5">
+        <div
+          className="bg-gradient-to-r from-blue-500 to-purple-500 h-2.5 rounded-full transition-all duration-300 ease-in-out"
+          style={{
+            width: `${((currentQuestion + 1) / questions.length) * 100}%`,
+          }}
+        ></div>
+      </div>
+      <Card className="mb-6 transition-all duration-300 ease-in-out transform hover:shadow-lg">
         <CardContent className="p-6">
           <h2 className="text-2xl font-bold mb-4">
             Question {currentQuestion + 1}
@@ -116,7 +130,11 @@ export default function QuizPage({ onEnd }: QuizPageProps) {
                     ? "default"
                     : "outline"
                 }
-                className="w-full justify-start text-left py-3 px-4 text-lg"
+                className={`w-full justify-start text-left py-3 px-4 text-lg mb-2 transition-all duration-200 ${
+                  userAnswers[currentQuestion] === choice
+                    ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white"
+                    : "hover:bg-gray-100"
+                }`}
               >
                 <span dangerouslySetInnerHTML={{ __html: choice }}></span>
               </Button>
@@ -128,14 +146,14 @@ export default function QuizPage({ onEnd }: QuizPageProps) {
         <Button
           onClick={() => navigateToQuestion(currentQuestion - 1)}
           disabled={currentQuestion === 0}
-          className="px-6"
+          className="px-6 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
         >
           Previous
         </Button>
         <Button
           onClick={() => navigateToQuestion(currentQuestion + 1)}
           disabled={currentQuestion === questions.length - 1}
-          className="px-6"
+          className="px-6 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
         >
           Next
         </Button>
@@ -147,7 +165,10 @@ export default function QuizPage({ onEnd }: QuizPageProps) {
         attempted={userAnswers.map(Boolean)}
         onNavigate={navigateToQuestion}
       />
-      <Button onClick={submitQuiz} className="mt-6 w-full py-3 text-lg">
+      <Button
+        onClick={submitQuiz}
+        className="mt-6 w-full py-3 text-lg bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 transition-all duration-300"
+      >
         Submit Quiz
       </Button>
     </div>

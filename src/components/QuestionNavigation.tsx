@@ -22,8 +22,14 @@ export default function QuestionNavigation({
           key={i}
           onClick={() => onNavigate(i)}
           variant={currentQuestion === i ? "default" : "outline"}
-          className={`w-full ${visited[i] ? "!bg-blue-100" : ""} ${
-            attempted[i] ? "!bg-green-100" : ""
+          className={`w-full transition-all duration-200 ${
+            currentQuestion === i
+              ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white"
+              : attempted[i]
+              ? "bg-green-100 hover:bg-green-200"
+              : visited[i]
+              ? "bg-blue-100 hover:bg-blue-200"
+              : "hover:bg-gray-100"
           }`}
         >
           {i + 1}
