@@ -32,10 +32,7 @@ export default function StartPage({ onStart }: StartPageProps) {
           required
           className="w-full"
         />
-        <Button
-          type="submit"
-          className="w-full py-3 text-lg bg-black text-white"
-        >
+        <Button type="submit" className="w-full py-3 text-lg">
           Start Quiz
         </Button>
       </form>
