@@ -9,6 +9,7 @@ import {
 import StartPage from "@/components/StartPage";
 import QuizPage from "@/components/QuizPage";
 import ReportPage from "@/components/ReportPage";
+import { Loader2 } from "lucide-react";
 
 const queryClient = new QueryClient();
 
@@ -38,7 +39,8 @@ function QuizApp() {
   } = useQuery<Question[]>({
     queryKey: ["questions"],
     queryFn: fetchQuestions,
-    staleTime: Infinity, // This ensures the data is never considered stale
+    staleTime: Infinity,
+    retry: 3,
   });
 
   const startQuiz = (email: string) => {
@@ -51,12 +53,34 @@ function QuizApp() {
     setQuizEnded(true);
   };
 
-  if (isLoading) return <div className="text-center">Loading questions...</div>;
+  if (isLoading)
+    return (
+      <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-24 bg-gradient-to-br from-blue-100 to-purple-100">
+        <div className="w-full max-w-4xl bg-white shadow-xl rounded-lg p-12 transition-all duration-300 ease-in-out transform hover:shadow-2xl flex flex-col items-center justify-center space-y-4">
+          <Loader2 className="h-12 w-12 animate-spin text-blue-500" />
+          <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+            Loading Questions...
+          </h2>
+          <p className="text-gray-500">
+            Please wait while we prepare your quiz
+          </p>
+        </div>
+      </main>
+    );
+
   if (isError)
     return (
-      <div className="text-center text-red-500">
-        Error loading questions. Please try again.
-      </div>
+      <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-24 bg-gradient-to-br from-blue-100 to-purple-100">
+        <div className="w-full max-w-4xl bg-white shadow-xl rounded-lg p-12 transition-all duration-300 ease-in-out transform hover:shadow-2xl flex flex-col items-center justify-center space-y-4">
+          <div className="h-12 w-12 rounded-full bg-red-100 flex items-center justify-center">
+            <span className="text-2xl text-red-500">×</span>
+          </div>
+          <h2 className="text-2xl font-bold text-red-500">
+            Error Loading Questions
+          </h2>
+          <p className="text-gray-500">Please refresh the page and try again</p>
+        </div>
+      </main>
     );
 
   return (
