@@ -108,7 +108,3 @@ Contributions are welcome! Feel free to fork the repository and submit a pull re
 ## ✨ Author
 
 [Hari Bot](https://github.com/hari-bot)
-
-```
-
-```
