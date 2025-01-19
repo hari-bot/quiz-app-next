@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Button, TextField } from "@radix-ui/themes";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface StartPageProps {
   onStart: (email: string) => void;
@@ -18,19 +19,23 @@ export default function StartPage({ onStart }: StartPageProps) {
   };
 
   return (
-    <div className="w-full max-w-md">
-      <h1 className="text-2xl font-bold mb-4 text-center">
+    <div className="w-full max-w-md mx-auto">
+      <h1 className="text-3xl font-bold mb-6 text-center">
         Welcome to the Quiz
       </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <TextField.Root
+        <Input
           type="email"
           placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          className="w-full"
         />
-        <Button type="submit" className="w-full">
+        <Button
+          type="submit"
+          className="w-full py-3 text-lg bg-black text-white"
+        >
           Start Quiz
         </Button>
       </form>
